@@ -132,7 +132,7 @@ shinyUI(
                          h3("Cadre du Projet"),
                          p("This app ",tags$b("Rshiny")," is part of a project for the english course."),
                          br(),
-                         "For this project we have used datas",tags$b("personality.csv")," downloaded on ",tags$b("Kaggle,"),"acessible from",a("ici.",href="https://www.kaggle.com/pavlorymarchuk/test3434"),
+                         "For this project we have used datas",tags$b("personality.csv")," downloaded on ",tags$b("Kaggle,"),"acessible from",a("here.",href="https://www.kaggle.com/pavlorymarchuk/test3434"),
                          style = "background-color:#e1d2b8;padding:15px;border-radius:10px;text-align:justify;font-size:18px",
                          br(),
                          h3("About us"),
