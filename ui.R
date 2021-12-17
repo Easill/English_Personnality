@@ -4,7 +4,7 @@ shinyUI(
   # type de l'interface
   dashboardPage(
     skin = "purple",
-    dashboardHeader(title = HTML(paste0("Cars CO",tags$sub("2")," emissions")),
+    dashboardHeader(title = HTML(paste0("Personnality prediction")),
                     titleWidth = 250
     ),
     # Contenu de la sidebar
@@ -26,7 +26,7 @@ shinyUI(
         tabItem(tabName = "home",
                 fluidRow(
                   column(width = 7,
-                         h3("Contexte"),
+                         h3("Context"),
                          p(
                            "This is an example of what we can do in statistical specialization, it is a shiny R application. 
                                        This one is about personality prediction. You can also try this application by yourself and play with it 
@@ -41,87 +41,51 @@ shinyUI(
         #Second tab content
         tabItem(tabName = "prediction",
                 fluidRow(
-                  column(width = 12, 
-                         fluidRow( # fluidRow1 (selections + graph poids variables)
-                           column(width = 8, #colone graph
-                                  box(width = 12,
-                                      title = "Poids des variables dans le modèle",
-                                      status = "info",
-                                      plotlyOutput("coef"),
-                                      chooseSliderSkin("Shiny", color = "#00c0ef"
-                                      ),
-                                      sliderInput(inputId = "Nbvar", # Nb var dans le modele
-                                                  label = "Nombre de variables à 
-                                                              inclure dans le modèle", 
-                                                  min = 1,
-                                                  max = 6,
-                                                  value = 6)
-                                  )
-                           ),
-                           column(width = 4, # colone selection des criteres
-                                  box(width = 12,
-                                      title = "Sélection exhaustive des variables", 
-                                      status = "info",
-                                      tabBox(width= 12,id = "Selection",
-                                             tabPanel("RSS",
-                                                      fluidRow(
-                                                        column(width = 12,
-                                                               plotOutput("Plrss"))
-                                                      )
-                                             ),
-                                             tabPanel("BIC",
-                                                      fluidRow(
-                                                        column(width=12,
-                                                               plotOutput("Plbic")
-                                                        )
-                                                      )
-                                             ),
-                                             tabPanel("AIC",
-                                                      fluidRow(
-                                                        column(width = 12,
-                                                               plotOutput("Plaic")
-                                                        )
-                                                      )
-                                             )
-                                      )
-                                  )
-                           )
-                         ),
-                         fluidRow( # fluidrow 2 (summary du modele + estimation de la perf)
-                           column(width = 6, # colonne summary
-                                  box(width = 12,
-                                      title = "Summary",
-                                      status = "info",
-                                      h3("Coefficients du modèle selectionné :"),
-                                      verbatimTextOutput("suM")
-                                  )
-                           ),
-                           column(width = 6, # colonne estimation de la performance
-                                  box(width = 12,
-                                      title = "Estimation de la performance",
-                                      status = "info",
-                                      textOutput("rmse"),
-                                      br(),
-                                      plotlyOutput("scatter")
-                                  )
-                           )
+                  column(width = 12,
+                         tabBox(id = "Scores", width = 12,
+                                tabPanel("Scores",
+                                         fluidRow(
+                                           column(width = 6, (h4("Indicate a score from 1 to 8 (1 being", tags$b("'very high'"),"and 8 being", tags$b("'very low'."))),
+                                                  br(),
+                                                  prettyRadioButtons(inputId = "Gender", label = "Gender", choices = c("Female" = 0,"Male" = 1,"Other" = 2),selected = 0),
+                                                  br(),
+                                                  numericInput(inputId = "Age", label = "Age", value = 23, min = 1, max = 60),
+                                                  br(),
+                                                  numericInput(inputId = "Openness", label = "Openness", value = 5, min = 1, max = 8),
+                                                  br(),
+                                                  numericInput(inputId = "Neuroticism", label = "Neuroticism", value = 5, min = 1, max = 8),
+                                                  br(),
+                                                  numericInput(inputId = "Conscientiousness", label = "Conscientiousness", value = 5, min = 1, max = 8),
+                                                  br(),
+                                                  numericInput(inputId = "Agreeableness", label = "Agreeableness", value = 5, min = 1, max = 8),
+                                                  br(),
+                                                  numericInput(inputId = "Extraversion", label = "Extraversion", value = 5, min = 1, max = 8),
+                                                  br(),
+                                           ),
+                                           column(width = 6, h4("Results :"),
+                                                  br(),
+                                                  h2("You are ....", textOutput("predict")),
+                                                  br(),
+                                                  h4("The results are probably wrong, due to lack of time we couldn't build a model strong enough to predict exactly which personnality you have among the five possibles. Moreover, the datas are based on people who answered 50 questions to have their predicted personnality. We didn't have the time to make you pass all these questions, but feel free to do them if you want to. (Type Big 5 personnality test on google).")
+                                                  )
+                                         )
+                                ),
                          )
-                         
                   )
                 )
         ),
-        tabItem(tabName="data",
+        tabItem(tabName="secret",
                 fluidRow(
-                  column(width = 12,
-                         tabBox(width = 12,
-                                id="tableaux",
-                                tabPanel("Summary",
-                                         verbatimTextOutput("summary")
-                                ),
-                                tabPanel("Datas",
-                                         dataTableOutput("tab")
-                                )
-                         )
+                  column(width = 9,
+                         h3("You shouldn't be here"),
+                         p(
+                           "You are currently in an english classroom, you should listen to us instead of trying to find some bugs in the app.",
+                           br(),
+                           "I hope getting rickrolled will be enough to teach you a lesson : LISTEN TO US WHILE WE SPEAK (even if you don't find interesting what we are saying).",
+                           br(),
+                           style = "background-color:#e1d2b8;padding:15px;border-radius:10px;text-align:justify;font-size:18px"),
+                         
+                         tags$img(src="rickroll.gif",width="420px",height="498px", align = "center") # ajout de l'image
                   )
                 )
                 
@@ -192,4 +156,3 @@ shinyUI(
     )
   )
 )
-
